@@ -1,6 +1,8 @@
 ﻿using QuBeyond.Challenge.Business.Exceptions;
+using QuBeyond.Challenge.Business.Validators;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace QuBeyond.Challenge.Business
 {
@@ -15,7 +17,26 @@ namespace QuBeyond.Challenge.Business
         }
         public IEnumerable<string> Find(IEnumerable<string> wordStream)
         {
-            Validate(wordStream);
+            if (MatrixValidator.Validate(wordStream))
+            { 
+
+                var wordsFinded = new SortedDictionary<string, int>();
+
+                foreach (var word in wordStream)
+                {
+                    //Check for duplicated words
+                    if (wordsFinded.ContainsKey(word)) continue;
+
+                    //Horizontal search
+                    
+
+
+
+
+                    //Vertical search
+                }            
+            
+            }
 
 
 
@@ -26,13 +47,13 @@ namespace QuBeyond.Challenge.Business
 
         }
 
-        private bool Validate(IEnumerable<string> matrix)
-        {
-            if (matrix == null)
-                throw new MatrixEmptyException();
 
 
-            return true;
-        }
+
+        private int WordCount(string word)
+        
+
+        
+
     }
 }
