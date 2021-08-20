@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31612.314
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "QuBeyond.Challenge.Business", "QuBeyond.Challenge.Business\QuBeyond.Challenge.Business.csproj", "{62697230-2551-4644-9CDB-CC877ED365A7}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "QuBeyond.Challenge.Tests", "QuBeyond.Challenge.Tests\QuBeyond.Challenge.Tests.csproj", "{DE7D2B5B-E07A-44D3-A95E-E0CC55CDD168}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{62697230-2551-4644-9CDB-CC877ED365A7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{62697230-2551-4644-9CDB-CC877ED365A7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{62697230-2551-4644-9CDB-CC877ED365A7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{62697230-2551-4644-9CDB-CC877ED365A7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DE7D2B5B-E07A-44D3-A95E-E0CC55CDD168}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DE7D2B5B-E07A-44D3-A95E-E0CC55CDD168}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DE7D2B5B-E07A-44D3-A95E-E0CC55CDD168}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DE7D2B5B-E07A-44D3-A95E-E0CC55CDD168}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {840EB358-8296-40EE-B426-933593EBE73A}
+	EndGlobalSection
+EndGlobal
