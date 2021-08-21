@@ -107,9 +107,8 @@ namespace QuBeyond.Challenge.Business
                 }
 
                 // I order the words by the most found
-                var sortedResult = wordsFinded.OrderBy(x => x.Value).Take(10).Select(y => y.Key);
+                var sortedResult = wordsFinded.OrderByDescending(x => x.Value).Take(10).Select(y => y.Key);
                 result = sortedResult.ToList();
-
             }
 
             return result;
