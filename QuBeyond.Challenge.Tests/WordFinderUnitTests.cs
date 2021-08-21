@@ -2,6 +2,7 @@ using NUnit.Framework;
 using QuBeyond.Challenge.Business;
 using QuBeyond.Challenge.Business.Exceptions;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace QuBeyond.Challenge.Tests
 {
@@ -17,6 +18,7 @@ namespace QuBeyond.Challenge.Tests
             _matrix = new List<string>();
         }
 
+        #region Tests
         [Test]
         public void WordFinder_ExceptionOnNullMatrix()
         {
@@ -32,8 +34,8 @@ namespace QuBeyond.Challenge.Tests
         [Test]
         public void WordFinder_ExceptionOnMatrixElementsSize()
         {
-            IEnumerable<string> matrix = null;
-            var wordstream = MatrixWithDifferentSizeElementsBuilder();
+            IEnumerable<string> matrix = MatrixWithDifferentSizeElementsBuilder();
+            var wordstream = new List<string>();
 
             _wordFinder = new WordFinder(matrix);
 
@@ -43,13 +45,83 @@ namespace QuBeyond.Challenge.Tests
         [Test]
         public void WordFinder_ExceptionOnMatrixTooLong()
         {
-            IEnumerable<string> matrix = null;
-            var wordstream = MatrixWithExceedingSize();
+            IEnumerable<string> matrix = MatrixWithExceedingSizeBuilder();
+            var wordstream = new List<string>();
 
             _wordFinder = new WordFinder(matrix);
 
             Assert.Throws(Is.InstanceOf(typeof(MatrixTooLongException)), delegate { _wordFinder.Find(wordstream); });
         }
+
+        [Test]
+        public void WordFinder_ExceptionMatrixNotSquare()
+        {
+            IEnumerable<string> matrix = MatrixNotSquareBuilder();
+            var wordstream = new List<string>();
+
+            _wordFinder = new WordFinder(matrix);
+
+            Assert.Throws(Is.InstanceOf(typeof(MatrixIsNotSquareException)), delegate { _wordFinder.Find(wordstream); });
+        }
+
+        [Test]
+        public void WordFinder_FindSmallMatrix()
+        {
+            IEnumerable<string> matrix = Matrix1Builder(); 
+            var wordstream = new List<string>()
+            { 
+                "wind",
+                "cold",
+                "chill"
+            };
+
+            _wordFinder = new WordFinder(matrix);
+            var result = _wordFinder.Find(wordstream);
+
+            Assert.That(result.Any(p => p == "wind"));
+            Assert.That(result.Any(p => p == "cold"));
+            Assert.That(result.Any(p => p == "chill"));
+        }
+
+        [Test]
+        public void WordFinder_FindMediumMatrix()
+        {
+            IEnumerable<string> matrix = MatrixMediumBuilder();
+            var wordstream = new List<string>()
+            {
+                "airplane",
+                "ship",
+                "truck",
+                "boat",
+                "road",
+                "car",
+                "sick",
+                "van",
+                "bus",
+                "earth",
+                "child",
+                "nice",
+                "place"
+            };
+
+            _wordFinder = new WordFinder(matrix);
+            var result = _wordFinder.Find(wordstream);
+
+            Assert.AreEqual(result.Count(), 10);
+            Assert.That(result.Any(p => p == "airplane"));
+            Assert.That(result.Any(p => p == "ship"));
+            Assert.That(result.Any(p => p == "truck"));
+            Assert.That(result.Any(p => p == "road"));
+            Assert.That(result.Any(p => p == "car"));
+            Assert.That(result.Any(p => p == "van"));
+            Assert.That(result.Any(p => p == "bus"));
+            Assert.That(result.Any(p => p == "child"));
+
+        }
+
+        #endregion
+
+        #region Builders
 
         private IEnumerable<string> Matrix1Builder()
         {
@@ -76,7 +148,7 @@ namespace QuBeyond.Challenge.Tests
 
         }
 
-        private IEnumerable<string> MatrixWithExceedingSize()
+        private IEnumerable<string> MatrixWithExceedingSizeBuilder()
         {
             var text = "Vestibulum ante ipsum primis in faucibus orci luctus et ultrices.";
             var matrix = new List<string>();
@@ -87,5 +159,37 @@ namespace QuBeyond.Challenge.Tests
             }
             return matrix;
         }
+
+        private IEnumerable<string> MatrixNotSquareBuilder()
+        {
+            return new List<string>
+            {
+                "abcdc",
+                "chill",
+                "uvdxg"
+            };
+        }
+
+
+        private IEnumerable<string> MatrixMediumBuilder()
+        {
+            return new List<string>
+            { 
+                "airplanertbc",
+                "inicexroadua",
+                "roadplacersr",
+                "pwbdcboattnt",
+                "lzvkoshipcar",
+                "aqaktmnroxlu",
+                "nbnsshiplbac",
+                "eachildliuok",
+                "hfsecncarswm",
+                "truckixnzbts",
+                "aaletqwearth",
+                "vanchildxvan"
+            };
+        }
+        #endregion
+
     }
 }

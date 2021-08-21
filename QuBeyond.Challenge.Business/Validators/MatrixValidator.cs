@@ -11,6 +11,9 @@ namespace QuBeyond.Challenge.Business.Validators
 
         public static bool Validate(IEnumerable<string> matrix)
         {
+            if (matrix == null)
+                throw new MatrixEmptyException();
+
             if (matrix != null && matrix.Count() == 0)
                 throw new MatrixEmptyException();
 
@@ -20,6 +23,8 @@ namespace QuBeyond.Challenge.Business.Validators
             if (!ValidateMatrixSize(matrix))
                 throw new MatrixTooLongException();
 
+            if (!ValidateMatrixIsSquare(matrix))
+                throw new MatrixIsNotSquareException();
 
             return true;
         }
@@ -52,6 +57,14 @@ namespace QuBeyond.Challenge.Business.Validators
             return (matrix.First().Length > 64 || matrix.Count() > 64)?false:true;
         }
 
+        private static bool ValidateMatrixIsSquare(IEnumerable<string> matrix)
+        { 
+            var x = matrix.First().Length;
+            var y = matrix.Count();
+
+            return x == y;
+        
+        }
 
     }
 }

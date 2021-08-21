@@ -15,9 +15,16 @@ namespace QuBeyond.Challenge.Business
         {
             _matrix = matrix;
         }
+
+        /// <summary>
+        /// Find words in a matrix and returns a list of the top 10 occurrencies
+        /// </summary>
+        /// <param name="wordStream"></param>
+        /// <returns></returns>
         public IEnumerable<string> Find(IEnumerable<string> wordStream)
         {
-            if (MatrixValidator.Validate(wordStream))
+            var result = new List<string>();
+            if (MatrixValidator.Validate(_matrix))
             { 
 
                 var wordsFinded = new SortedDictionary<string, int>();
@@ -27,30 +34,99 @@ namespace QuBeyond.Challenge.Business
                     //Check for duplicated words
                     if (wordsFinded.ContainsKey(word)) continue;
 
-                    //Horizontal search
-                    
+                    var wordSize = word.Length;
+                    var matrixSize = _matrix.First().Length;
+
+                    var searchLimit = matrixSize - wordSize;
+                    // This means word is bigger than matrix so, I skip this one for search
+                    if (searchLimit < 0) continue;
 
 
+                    // Iterate rows
+                    for (int y = 0; y < matrixSize; y++)
+                    {
+                        // Iterate columns
+                        for (int x = 0; x < matrixSize; x++)
+                        {
 
+                            var foundH = true;
+                            var foundV = true;
 
-                    //Vertical search
-                }            
-            
+                            if (x <= searchLimit)
+                            {
+                                for (int z = 0; z < wordSize; z++)
+                                {
+                                    //Horizontal search
+                                    if (word[z] != _matrix.ElementAt(y)[x + z])
+                                    {
+                                        foundH = false;
+                                        break;
+                                    }
+                                }
+                            }
+                            else
+                            { 
+                                foundH = false;
+                            }
+
+                            if (y <= searchLimit)
+                            {
+                                for (int z = 0; z < wordSize; z++)
+                                {
+                                    //Vertical search
+                                    if (word[z] != _matrix.ElementAt(y + z)[x])
+                                    {
+                                        foundV = false;
+                                        break;
+                                    }
+
+                                }
+                            }
+                            else
+                            {
+                                foundV = false;
+                            }
+
+                            if (foundH)
+                            {
+                                // Add or increment finded word to results
+                                AddFundedWord(wordsFinded, word);
+
+                                // skip word length from search scope
+                                x += wordSize;
+                            }
+
+                            if (foundV)
+                            { 
+                                AddFundedWord(wordsFinded, word);
+                            }
+
+                        }
+                    }
+
+                }
+
+                // I order the words by the most found
+                var sortedResult = wordsFinded.OrderBy(x => x.Value).Take(10).Select(y => y.Key);
+                result = sortedResult.ToList();
+
             }
 
+            return result;
+        }
 
 
-
-            //TODO: temporary
-            return null;
-
+        private void AddFundedWord(SortedDictionary<string, int> wordsFinded, string word)
+        {
+            if (wordsFinded.ContainsKey(word))
+                wordsFinded[word] += 1;
+            else
+                wordsFinded.Add(word, 1);
 
         }
 
 
-
-
-        private int WordCount(string word)
+        //private int WordCount(string word)
         
 
         
