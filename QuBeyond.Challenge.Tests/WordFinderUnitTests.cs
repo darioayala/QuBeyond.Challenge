@@ -123,7 +123,7 @@ namespace QuBeyond.Challenge.Tests
         }
 
         [Test]
-        public void WordFinder_NoWordWhereFind()
+        public void WordFinder_NoWordWereFind()
         {
             IEnumerable<string> matrix = MatrixSmallBuilder();
             var wordstream = new List<string>()
