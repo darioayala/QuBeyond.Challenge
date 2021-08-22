@@ -49,6 +49,9 @@ namespace QuBeyond.Challenge.Business
                         for (int x = 0; x < matrixSize; x++)
                         {
 
+                            // if word doesn't fit in the remaining search area go to next row
+                            if (x > searchLimit && y > searchLimit) break;
+
                             var foundH = true;
                             var foundV = true;
 
