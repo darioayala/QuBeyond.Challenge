@@ -90,7 +90,7 @@ namespace QuBeyond.Challenge.Business
                             if (foundH)
                             {
                                 // Add or increment finded word to results
-                                AddFundedWord(wordsFinded, word);
+                                AddFindedWord(wordsFinded, word);
 
                                 // skip word length from search scope
                                 x += wordSize;
@@ -98,7 +98,7 @@ namespace QuBeyond.Challenge.Business
 
                             if (foundV)
                             { 
-                                AddFundedWord(wordsFinded, word);
+                                AddFindedWord(wordsFinded, word);
                             }
 
                         }
@@ -115,7 +115,7 @@ namespace QuBeyond.Challenge.Business
         }
 
 
-        private void AddFundedWord(SortedDictionary<string, int> wordsFinded, string word)
+        private void AddFindedWord(SortedDictionary<string, int> wordsFinded, string word)
         {
             if (wordsFinded.ContainsKey(word))
                 wordsFinded[word] += 1;

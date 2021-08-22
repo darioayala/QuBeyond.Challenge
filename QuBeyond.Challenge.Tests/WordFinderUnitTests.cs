@@ -67,12 +67,13 @@ namespace QuBeyond.Challenge.Tests
         [Test]
         public void WordFinder_FindSmallMatrix()
         {
-            IEnumerable<string> matrix = Matrix1Builder(); 
+            IEnumerable<string> matrix = MatrixSmallBuilder(); 
             var wordstream = new List<string>()
             { 
                 "wind",
                 "cold",
-                "chill"
+                "chill",
+                "tree"
             };
 
             _wordFinder = new WordFinder(matrix);
@@ -81,6 +82,7 @@ namespace QuBeyond.Challenge.Tests
             Assert.That(result.Any(p => p == "wind"));
             Assert.That(result.Any(p => p == "cold"));
             Assert.That(result.Any(p => p == "chill"));
+            Assert.That(!result.Any(p => p == "tree"));
         }
 
         [Test]
@@ -107,6 +109,7 @@ namespace QuBeyond.Challenge.Tests
             _wordFinder = new WordFinder(matrix);
             var result = _wordFinder.Find(wordstream);
 
+            // I check for words with more that 1 occurrence
             Assert.AreEqual(result.Count(), 10);
             Assert.That(result.Any(p => p == "airplane"));
             Assert.That(result.Any(p => p == "ship"));
@@ -119,11 +122,29 @@ namespace QuBeyond.Challenge.Tests
 
         }
 
+        [Test]
+        public void WordFinder_NoWordWhereFind()
+        {
+            IEnumerable<string> matrix = MatrixSmallBuilder();
+            var wordstream = new List<string>()
+            {
+                "storm",
+                "river",
+                "tree"
+            };
+
+            _wordFinder = new WordFinder(matrix);
+            var result = _wordFinder.Find(wordstream);
+
+            Assert.IsInstanceOf(typeof(IEnumerable<string>),result);
+            Assert.AreEqual(result.Count(), 0);
+        }
+
         #endregion
 
         #region Builders
 
-        private IEnumerable<string> Matrix1Builder()
+        private IEnumerable<string> MatrixSmallBuilder()
         {
             return new List<string>
             {
